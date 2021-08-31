@@ -1,49 +1,30 @@
 
 public class EmployeWage{
- public static void main(String args[])
-	{
-	  System.out.println("Welcome to Employe Wage computation");
-		double Wage_per_hour=20;
-		double Full_Time_hour=8;
-		double Part_Time_hour=4;
-		int working_days_per_month=20;
-		double Monthly_wage;
-		double Daily_wage;
-		int PartTime=2;
-		int FullTime=1;
-		int Max_total_working_hour=100;
-		int Max_total_working_days=20;
-		int total_working_hour=0,total_working_days=0;
-		double Total_wage=0;
-		while(total_working_hour < Max_total_working_hour && total_working_days <Max_total_working_days){
-		total_working_days+=1;
-		double attendance=Math.floor(Math.random()*10)%3;
-		switch((int)attendance)
+        public static void main(String[] args) {
+
+        System.out.println("Welcome to Employee wage Computation program");
+		final int IS_FULL_TIME =1;
+		final int IS_PART_TIME =2;
+		int wagePerHour=20,fullDayHour=0,totalWorkingHours=0,totalWorkingDays=0;
+		int empwage=0,totalwage=0;
+		while(totalWorkingHours<100||totalWorkingDays<20)
 		{
-			
-			case 0:System.out.println("Employe is absent");
-					break;
-			case 1:System.out.println("Employee is present and is FullTime");
-        			 Daily_wage=Wage_per_hour*Full_Time_hour;
-					 Total_wage+=Daily_wage;
-					 Monthly_wage=Daily_wage*working_days_per_month;
-      			 System.out.println("Daily wage of a Full Time Employe is: "+String.format("%.4f",Daily_wage));
-					 System.out.println("Monthly wage of a Full Time Employe is: "+String.format("%.4f",Monthly_wage));
-					 total_working_hour+=Full_Time_hour;
-					 break;
-			case 2:System.out.println("Employee is present and is PartTime");
-        			 Daily_wage=Wage_per_hour*Part_Time_hour;
-					 Total_wage+=Daily_wage;
-					 Monthly_wage=Daily_wage*working_days_per_month;
-        			 System.out.println("Daily wage of a Part Time Employe is: "+String.format("%.4f",Daily_wage));
-					 System.out.println("Monthly wage of a part Time Employe is: "+String.format("%.4f",Monthly_wage));
-					 total_working_hour+=Part_Time_hour;
-					 break;
-			default:System.out.println("Invalid input");
+		int attendance=(int)Math.floor(Math.random()*10)%3;
+		switch (attendance) {
+			case  IS_FULL_TIME: fullDayHour=8; 
+								totalWorkingDays+=1; 
+								break;
+			case IS_PART_TIME: fullDayHour=4; 
+								totalWorkingDays+=1; 
+								break;
+			default: fullDayHour=0;
+						break;
 		}
-}
-System.out.println("Total working hour="+total_working_hour);
-System.out.println("Total working Days="+total_working_days);
-System.out.println("Total Wage="+Total_wage);
+		empwage=fullDayHour*wagePerHour ;
+		totalwage+=empwage;
+		totalWorkingHours+=fullDayHour;		
+		System.out.println("Employee wage for day is "+empwage);
+		}
+		System.out.println("Total wage of employee: "+totalwage);
 }
 }
