@@ -17,27 +17,27 @@ class Employe {
 	public void getAttendance() {
 		this.attendance = (int) Math.floor(Math.random() * 10) % 3;
 
-		switch (this.attendance) {
+		switch (attendance) {
 		case IS_FULL_TIME:
-			this.fullDayHour = 8;
-			this.totalWorkingDays += 1;
+			fullDayHour = 8;
+			totalWorkingDays += 1;
 			break;
 		case IS_PART_TIME:
 			fullDayHour = 4;
-			this.totalWorkingDays += 1;
+			totalWorkingDays += 1;
 			break;
 		default:
 			fullDayHour = 0;
 			break;
 		}
-		this.totalWorkingHours += this.fullDayHour;
+		totalWorkingHours += fullDayHour;
 
 	}
 
 	public void getwage() {
 		int empwage = 0;
-		empwage = this.fullDayHour * wagePerHour;
-		this.totalWage += empwage;
+		empwage = fullDayHour * wagePerHour;
+		totalWage += empwage;
 		System.out.println("Employee wage for day is " + empwage);
 	}
 
