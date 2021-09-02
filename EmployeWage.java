@@ -1,64 +1,81 @@
+import java.util.Scanner;
 
-class Employe {
-	final int IS_FULL_TIME = 1;
-	final int IS_PART_TIME = 2;
-	final int wagePerHour = 20;
-	int attendance;
-	int fullDayHour;
-	int totalWage;
-	int totalWorkingDays;
-	int totalWorkingHours;
+/**
+ * @author jayeshkumar
+ * Every company will have name,wagePerhour,maximum working hour and days of employee.
+ */
+class Company {
+	String companyName;
+	int wagePerHour;
+	int maxHour;
+	int maxDays;
 
-	Employe() {
-		totalWorkingDays = 0;
-		totalWorkingHours = 0;
+	public void getData() {
+		Scanner r = new Scanner(System.in);
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter company name");
+		companyName = r.nextLine();
+		System.out.println("Enter wage per hour of company");
+		wagePerHour = sc.nextInt();
+		System.out.println("Enter maximum working hour of company");
+		maxHour = sc.nextInt();
+		System.out.println("Enter maximum working days of company");
+		maxDays = sc.nextInt();
 	}
-
-	public void getAttendance() {
-		this.attendance = (int) Math.floor(Math.random() * 10) % 3;
-
-		switch (attendance) {
-		case IS_FULL_TIME:
-			fullDayHour = 8;
-			totalWorkingDays += 1;
-			break;
-		case IS_PART_TIME:
-			fullDayHour = 4;
-			totalWorkingDays += 1;
-			break;
-		default:
-			fullDayHour = 0;
-			break;
-		}
-		totalWorkingHours += fullDayHour;
-
-	}
-
-	public void getwage() {
-		int empwage = 0;
-		empwage = fullDayHour * wagePerHour;
-		totalWage += empwage;
-		System.out.println("Employee wage for day is " + empwage);
-	}
-
 }
 
+/**
+ * @author jayeshkumar
+ * Computes wage of employee belonging to comapy with specific wagePerhour
+ */
 public class EmployeWage {
+	final static int IS_FULL_TIME = 1;
+	final static int IS_PART_TIME = 2;
 
-	public static void main(String[] args) {
+	public static void computWage(String companyName, int wagePerHour, int maxHours, int maxDays) {
 
-		System.out.println("Welcome to Employee wage Computation program");
+		int empWage, totalHours, totalDays, empHour, totalWage;
+		empWage = totalHours = totalDays = empHour = totalWage = 0;
 
-		Employe emp = new Employe();
+		while (totalHours < maxHours && totalDays < maxDays) {
+			totalDays += 1;
+			int attendance = (int) Math.floor(Math.random() * 10) % 3;
 
-		int fullDayHour = 0;
-
-		while (emp.totalWorkingHours < 100 && emp.totalWorkingDays < 20) {
-
-			emp.getAttendance();
-			emp.getwage();
+			switch (attendance) {
+			case IS_FULL_TIME:
+				empHour = 8;
+				break;
+			case IS_PART_TIME:
+				empHour = 4;
+				break;
+			default:
+				empHour = 0;
+			}
+			totalHours += empHour;
+			empWage = wagePerHour * empHour;
+			totalWage += empWage;
 
 		}
-		System.out.println("Total wage of employee: " + emp.totalWage);
+
+		display(companyName, totalWage, totalHours, totalDays);
+
 	}
+
+	private static void display(String companyName, int wage, int totalHour, int totalDay) {
+
+		System.out.println("Company Name::" + companyName);
+		System.out.println("Total Wage::" + wage);
+		System.out.println("Total working hours per month::" + totalHour);
+		System.out.println("Total Working days per month::" + totalDay);
+
+	}
+
+	public static void main(String[] args) {
+		Company yml = new Company();
+
+		yml.getData();
+		computWage(yml.companyName, yml.wagePerHour, yml.maxHour, yml.maxDays);
+
+	}
+
 }
