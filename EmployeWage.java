@@ -94,18 +94,19 @@ public class EmployeWage implements ComputeEmpWage {
 
 				int dailywage = empHour * company.wagePerHour;
 				company.setDailyWage(dailywage);
-				 System.out.println("Day::" + totalDays + " Emp hour" + empHour+" Daily wage is "+company.getDailyWage());
+				System.out.println(
+						"Day::" + totalDays + " Emp hour" + empHour + " Daily wage is " + company.getDailyWage());
 
 			}
 
 			company.setTotalWage(totalHours * company.wagePerHour);
-			 System.out.println(company);
+			System.out.println(company);
 		}
 
 	}
 
 	/**
-	 * returns totalwage of company 
+	 * returns totalwage of company
 	 */
 	public int getTotalWage(String company) {
 
@@ -129,8 +130,7 @@ public class EmployeWage implements ComputeEmpWage {
 
 		employeWageBuilder.computWage();
 
-		System.out
-				.println("Total employee wage for company Amazon is " + employeWageBuilder.getTotalWage("Amazon"));
+		System.out.println("Total employee wage for company Amazon is " + employeWageBuilder.getTotalWage("Amazon"));
 
 	}
 
