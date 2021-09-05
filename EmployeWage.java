@@ -10,6 +10,7 @@ class CompanyWage {
 	public final int wagePerHour;
 	public final int maxHoursPerMonth;
 	public final int maxDaysPerMonth;
+	public int dailyWage;
 	public int totalWage;
 
 	CompanyWage(String company, int wagePerHour, int maxHoursPerMonth, int maxDaysPerMonth) {
@@ -18,6 +19,17 @@ class CompanyWage {
 		this.maxHoursPerMonth = maxHoursPerMonth;
 		this.maxDaysPerMonth = maxDaysPerMonth;
 	}
+	
+
+	public int getDailyWage() {
+		return dailyWage;
+	}
+
+
+	public void setDailyWage(int dailyWage) {
+		this.dailyWage = dailyWage;
+	}
+
 
 	public int getTotalWage() {
 		return totalWage;
@@ -83,7 +95,10 @@ public class EmployeWage implements ComputeEmpWage {
 					empHour = 0;
 				}
 				totalHours += empHour;
-				System.out.println("Day::" + totalDays + " Emp hour" + empHour);
+				
+				int dailywage=empHour * company.wagePerHour;
+				company.setDailyWage(dailywage);
+				System.out.println("Day::" + totalDays + " Emp hour" + empHour+" Daily wage is "+company.getDailyWage());
 
 			}
 
