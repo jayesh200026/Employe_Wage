@@ -19,17 +19,14 @@ class CompanyWage {
 		this.maxHoursPerMonth = maxHoursPerMonth;
 		this.maxDaysPerMonth = maxDaysPerMonth;
 	}
-	
 
 	public int getDailyWage() {
 		return dailyWage;
 	}
 
-
 	public void setDailyWage(int dailyWage) {
 		this.dailyWage = dailyWage;
 	}
-
 
 	public int getTotalWage() {
 		return totalWage;
@@ -56,16 +53,15 @@ public class EmployeWage implements ComputeEmpWage {
 
 	private int numOfCompany = 0;
 
-
 	private List<CompanyWage> companywage;
 
 	EmployeWage() {
-		companywage =  new ArrayList<>();
+		companywage = new ArrayList<>();
 	}
 
 	public void addCompanyEmpWage(String company, int wagePerHour, int maxHoursPerMonth, int maxDaysPerMonth) {
-		
-		CompanyWage companyWage=new CompanyWage(company, wagePerHour, maxHoursPerMonth, maxDaysPerMonth);
+
+		CompanyWage companyWage = new CompanyWage(company, wagePerHour, maxHoursPerMonth, maxDaysPerMonth);
 		companywage.add(companyWage);
 		numOfCompany += 1;
 	}
@@ -75,7 +71,7 @@ public class EmployeWage implements ComputeEmpWage {
 	 */
 	public void computWage() {
 
-		for (CompanyWage company: companywage) {
+		for (CompanyWage company : companywage) {
 
 			int totalHours, totalDays, empHour;
 			totalHours = totalDays = empHour = 0;
@@ -95,16 +91,31 @@ public class EmployeWage implements ComputeEmpWage {
 					empHour = 0;
 				}
 				totalHours += empHour;
-				
-				int dailywage=empHour * company.wagePerHour;
+
+				int dailywage = empHour * company.wagePerHour;
 				company.setDailyWage(dailywage);
-				System.out.println("Day::" + totalDays + " Emp hour" + empHour+" Daily wage is "+company.getDailyWage());
+				 System.out.println("Day::" + totalDays + " Emp hour" + empHour+" Daily wage is "+company.getDailyWage());
 
 			}
 
 			company.setTotalWage(totalHours * company.wagePerHour);
-			System.out.println(company);
+			 System.out.println(company);
 		}
+
+	}
+
+	/**
+	 * returns totalwage of company 
+	 */
+	public int getTotalWage(String company) {
+
+		for (CompanyWage i : companywage) {
+			if ((i.company).equals(company)) {
+				return i.getTotalWage();
+			}
+
+		}
+		return 0;
 
 	}
 
@@ -115,8 +126,11 @@ public class EmployeWage implements ComputeEmpWage {
 		employeWageBuilder.addCompanyEmpWage("Amazon", 60, 90, 20);
 		employeWageBuilder.addCompanyEmpWage("Google", 80, 87, 18);
 		employeWageBuilder.addCompanyEmpWage("Facebook", 70, 85, 21);
-		
+
 		employeWageBuilder.computWage();
+
+		System.out
+				.println("Total employee wage for company Amazon is " + employeWageBuilder.getTotalWage("Amazon"));
 
 	}
 

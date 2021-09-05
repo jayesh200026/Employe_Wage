@@ -8,4 +8,6 @@ public interface ComputeEmpWage {
 
 	public void computWage();
 
+	public int getTotalWage(String companyName);
+
 }
