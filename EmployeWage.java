@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -42,14 +44,17 @@ public class EmployeWage implements ComputeEmpWage {
 
 	private int numOfCompany = 0;
 
-	private CompanyWage[] companywage;
+
+	private List<CompanyWage> companywage;
 
 	EmployeWage() {
-		companywage = new CompanyWage[5];
+		companywage =  new ArrayList<>();
 	}
 
 	public void addCompanyEmpWage(String company, int wagePerHour, int maxHoursPerMonth, int maxDaysPerMonth) {
-		companywage[numOfCompany] = new CompanyWage(company, wagePerHour, maxHoursPerMonth, maxDaysPerMonth);
+		
+		CompanyWage companyWage=new CompanyWage(company, wagePerHour, maxHoursPerMonth, maxDaysPerMonth);
+		companywage.add(companyWage);
 		numOfCompany += 1;
 	}
 
@@ -58,12 +63,12 @@ public class EmployeWage implements ComputeEmpWage {
 	 */
 	public void computWage() {
 
-		for (int i = 0; i < numOfCompany; i++) {
+		for (CompanyWage company: companywage) {
 
 			int totalHours, totalDays, empHour;
 			totalHours = totalDays = empHour = 0;
 
-			while (totalHours < companywage[i].maxHoursPerMonth && totalDays < companywage[i].maxDaysPerMonth) {
+			while (totalHours < company.maxHoursPerMonth && totalDays < company.maxDaysPerMonth) {
 				totalDays += 1;
 				int attendance = (int) Math.floor(Math.random() * 10) % 3;
 
@@ -82,8 +87,8 @@ public class EmployeWage implements ComputeEmpWage {
 
 			}
 
-			companywage[i].setTotalWage(totalHours * companywage[i].wagePerHour);
-			System.out.println(companywage[i]);
+			company.setTotalWage(totalHours * company.wagePerHour);
+			System.out.println(company);
 		}
 
 	}
@@ -92,9 +97,10 @@ public class EmployeWage implements ComputeEmpWage {
 
 		EmployeWage employeWageBuilder = new EmployeWage();
 
-		employeWageBuilder.addCompanyEmpWage("Amazon", 40, 90, 20);
-		employeWageBuilder.addCompanyEmpWage("Google", 50, 87, 18);
-
+		employeWageBuilder.addCompanyEmpWage("Amazon", 60, 90, 20);
+		employeWageBuilder.addCompanyEmpWage("Google", 80, 87, 18);
+		employeWageBuilder.addCompanyEmpWage("Facebook", 70, 85, 21);
+		
 		employeWageBuilder.computWage();
 
 	}
