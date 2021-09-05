@@ -36,7 +36,7 @@ class CompanyWage {
  * @author jayeshkumar Computes wage of employee belonging to comapy with
  *         specific wagePerhour
  */
-public class EmployeWage {
+public class EmployeWage implements ComputeEmpWage {
 	public static final int IS_FULL_TIME = 1;
 	public static final int IS_PART_TIME = 2;
 
@@ -48,7 +48,7 @@ public class EmployeWage {
 		companywage = new CompanyWage[5];
 	}
 
-	private void addCompanyEmpWage(String company, int wagePerHour, int maxHoursPerMonth, int maxDaysPerMonth) {
+	public void addCompanyEmpWage(String company, int wagePerHour, int maxHoursPerMonth, int maxDaysPerMonth) {
 		companywage[numOfCompany] = new CompanyWage(company, wagePerHour, maxHoursPerMonth, maxDaysPerMonth);
 		numOfCompany += 1;
 	}
@@ -56,7 +56,7 @@ public class EmployeWage {
 	/**
 	 * Made this method non static so that i can access non static variables.
 	 */
-	private void computWage() {
+	public void computWage() {
 
 		for (int i = 0; i < numOfCompany; i++) {
 
