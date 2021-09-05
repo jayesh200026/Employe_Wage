@@ -1,80 +1,101 @@
 import java.util.Scanner;
 
+/**
+ * @author jayeshkumar This class has features needed to compute the wage
+ */
+class CompanyWage {
+	public final String company;
+	public final int wagePerHour;
+	public final int maxHoursPerMonth;
+	public final int maxDaysPerMonth;
+	public int totalWage;
+
+	CompanyWage(String company, int wagePerHour, int maxHoursPerMonth, int maxDaysPerMonth) {
+		this.company = company;
+		this.wagePerHour = wagePerHour;
+		this.maxHoursPerMonth = maxHoursPerMonth;
+		this.maxDaysPerMonth = maxDaysPerMonth;
+	}
+
+	public int getTotalWage() {
+		return totalWage;
+	}
+
+	public void setTotalWage(int totalWage) {
+		this.totalWage = totalWage;
+	}
+
+	@Override
+	public String toString() {
+		return "CompanyWage [company=" + company + ", totalWage=" + totalWage + "]";
+	}
+
+}
 
 /**
- * @author jayeshkumar
- * Computes wage of employee belonging to comapy with specific wagePerhour
+ * @author jayeshkumar Computes wage of employee belonging to comapy with
+ *         specific wagePerhour
  */
 public class EmployeWage {
 	public static final int IS_FULL_TIME = 1;
 	public static final int IS_PART_TIME = 2;
-	
-	private final String company;
-	private final int wagePerHour;
-	private final int maxHoursPerMonth;
-	private final int maxDaysPerMonth;
-	private int totalWage;
-	
-	@Override
-	public String toString() {
-		return "Total EmployeWage for company=" + company + " is " + totalWage + " ";
+
+	private int numOfCompany = 0;
+
+	private CompanyWage[] companywage;
+
+	EmployeWage() {
+		companywage = new CompanyWage[5];
 	}
 
-
-
-	EmployeWage(String company, int wagePerHour, int maxHoursPerMonth, int maxDaysPerMonth){
-		this.company=company;
-		this.wagePerHour=wagePerHour;
-		this.maxHoursPerMonth=maxHoursPerMonth;
-		this.maxDaysPerMonth=maxDaysPerMonth;
+	private void addCompanyEmpWage(String company, int wagePerHour, int maxHoursPerMonth, int maxDaysPerMonth) {
+		companywage[numOfCompany] = new CompanyWage(company, wagePerHour, maxHoursPerMonth, maxDaysPerMonth);
+		numOfCompany += 1;
 	}
-	
-	
 
 	/**
 	 * Made this method non static so that i can access non static variables.
 	 */
-	public void computWage() {
+	private void computWage() {
 
-		int empWage, totalHours, totalDays, empHour;
-		empWage = totalHours = totalDays = empHour = 0;
+		for (int i = 0; i < numOfCompany; i++) {
 
-		while (totalHours < maxHoursPerMonth && totalDays < maxDaysPerMonth) {
-			totalDays += 1;
-			int attendance = (int) Math.floor(Math.random() * 10) % 3;
+			int totalHours, totalDays, empHour;
+			totalHours = totalDays = empHour = 0;
 
-			switch (attendance) {
-			case IS_FULL_TIME:
-				empHour = 8;
-				break;
-			case IS_PART_TIME:
-				empHour = 4;
-				break;
-			default:
-				empHour = 0;
+			while (totalHours < companywage[i].maxHoursPerMonth && totalDays < companywage[i].maxDaysPerMonth) {
+				totalDays += 1;
+				int attendance = (int) Math.floor(Math.random() * 10) % 3;
+
+				switch (attendance) {
+				case IS_FULL_TIME:
+					empHour = 8;
+					break;
+				case IS_PART_TIME:
+					empHour = 4;
+					break;
+				default:
+					empHour = 0;
+				}
+				totalHours += empHour;
+				System.out.println("Day::" + totalDays + " Emp hour" + empHour);
+
 			}
-			totalHours += empHour;
-			System.out.println("Day::"+totalDays+ " Emp hour"+empHour);
 
+			companywage[i].setTotalWage(totalHours * companywage[i].wagePerHour);
+			System.out.println(companywage[i]);
 		}
-		empWage = wagePerHour * totalHours;
-		totalWage += empWage;
-		
 
 	}
 
-	
 	public static void main(String[] args) {
-		
-		EmployeWage amazon = new EmployeWage("Amazon",40,90,20);
-		EmployeWage google = new EmployeWage("Google",50,87,18);
-		
-		amazon.computWage();
-		System.out.println(amazon);
-		google.computWage();
-		
-		System.out.println(google);
-		
+
+		EmployeWage employeWageBuilder = new EmployeWage();
+
+		employeWageBuilder.addCompanyEmpWage("Amazon", 40, 90, 20);
+		employeWageBuilder.addCompanyEmpWage("Google", 50, 87, 18);
+
+		employeWageBuilder.computWage();
 
 	}
 
