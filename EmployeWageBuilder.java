@@ -1,64 +1,30 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
-/**
- * @author jayeshkumar This class has features needed to compute the wage
- */
-class CompanyWage {
-	public final String company;
-	public final int wagePerHour;
-	public final int maxHoursPerMonth;
-	public final int maxDaysPerMonth;
-	public int dailyWage;
-	public int totalWage;
 
-	CompanyWage(String company, int wagePerHour, int maxHoursPerMonth, int maxDaysPerMonth) {
-		this.company = company;
-		this.wagePerHour = wagePerHour;
-		this.maxHoursPerMonth = maxHoursPerMonth;
-		this.maxDaysPerMonth = maxDaysPerMonth;
-	}
-
-	public int getDailyWage() {
-		return dailyWage;
-	}
-
-	public void setDailyWage(int dailyWage) {
-		this.dailyWage = dailyWage;
-	}
-
-	public int getTotalWage() {
-		return totalWage;
-	}
-
-	public void setTotalWage(int totalWage) {
-		this.totalWage = totalWage;
-	}
-
-	@Override
-	public String toString() {
-		return "CompanyWage [company=" + company + ", totalWage=" + totalWage + "]";
-	}
-
-}
 
 /**
  * @author jayeshkumar Computes wage of employee belonging to comapy with
  *         specific wagePerhour
  */
-public class EmployeWage implements ComputeEmpWage {
+public class EmployeWageBuilder implements ComputeEmpWage {
 	public static final int IS_FULL_TIME = 1;
 	public static final int IS_PART_TIME = 2;
 
 	private int numOfCompany = 0;
 
 	private List<CompanyWage> companywage;
+	private Map<String,CompanyWage> map1 ;
 
-	EmployeWage() {
+	EmployeWageBuilder() {
 		companywage = new ArrayList<>();
+		map1=new HashMap<>();
 	}
 
+	//@Override
 	public void addCompanyEmpWage(String company, int wagePerHour, int maxHoursPerMonth, int maxDaysPerMonth) {
 
 		CompanyWage companyWage = new CompanyWage(company, wagePerHour, maxHoursPerMonth, maxDaysPerMonth);
@@ -69,6 +35,7 @@ public class EmployeWage implements ComputeEmpWage {
 	/**
 	 * Made this method non static so that i can access non static variables.
 	 */
+	//@Override
 	public void computWage() {
 
 		for (CompanyWage company : companywage) {
@@ -94,6 +61,7 @@ public class EmployeWage implements ComputeEmpWage {
 
 				int dailywage = empHour * company.wagePerHour;
 				company.setDailyWage(dailywage);
+				map1.put(company.company, company);
 				System.out.println(
 						"Day::" + totalDays + " Emp hour" + empHour + " Daily wage is " + company.getDailyWage());
 
@@ -109,20 +77,18 @@ public class EmployeWage implements ComputeEmpWage {
 	 * returns totalwage of company
 	 */
 	public int getTotalWage(String company) {
-
-		for (CompanyWage i : companywage) {
-			if ((i.company).equals(company)) {
-				return i.getTotalWage();
+		
+		CompanyWage c = map1.get(company);
+		if(c != null) {
+			return c.getTotalWage();		
 			}
-
-		}
 		return 0;
 
 	}
 
 	public static void main(String[] args) {
 
-		EmployeWage employeWageBuilder = new EmployeWage();
+		EmployeWageBuilder employeWageBuilder = new EmployeWageBuilder();
 
 		employeWageBuilder.addCompanyEmpWage("Amazon", 60, 90, 20);
 		employeWageBuilder.addCompanyEmpWage("Google", 80, 87, 18);
